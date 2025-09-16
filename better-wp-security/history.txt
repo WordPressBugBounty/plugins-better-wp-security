@@ -1111,3 +1111,5 @@
 	Enhancement: The Site Scan email now only includes newly found vulnerabilities to prevent notification fatigue.
 	Enhancement: Site Scans now run four times daily to detect new vulnerabilities.
 	Tweak: Make frontend JS code compatible with React 18.
+9.4.1 - 2025-09-15 - Volodymyr Shelmuk
+    Bug Fix: Missing assets in release 9.4.0.
