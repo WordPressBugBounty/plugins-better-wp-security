@@ -8,18 +8,15 @@ import styled from '@emotion/styled';
  */
 import {
 	brush as themeIcon,
-	check as checkIcon,
-	closeSmall as closeIcon,
 	plugins as pluginIcon,
 	wordpress as coreIcon,
 } from '@wordpress/icons';
-import { Icon } from '@wordpress/components';
 
 /**
  * SolidWP dependencies
  */
 import { List, Surface, Text } from '@ithemes/ui';
-import { VulnerabilityMitigated, VulnerabilitySuccess } from '@ithemes/security-style-guide';
+import { VulnerabilitySuccess } from '@ithemes/security-style-guide';
 
 export function vulnerabilityIcon( type ) {
 	switch ( type ) {
@@ -31,21 +28,6 @@ export function vulnerabilityIcon( type ) {
 			return coreIcon;
 		default:
 			return undefined;
-	}
-}
-
-export function statusIcon( status ) {
-	switch ( status ) {
-		case '':
-			return <StyledStatusRedCircle icon={ closeIcon } style={ { fill: '#D75A4B' } } />;
-		case 'auto-updated':
-		case 'deactivated':
-		case 'deleted':
-		case 'updated':
-			return <StyledStatusCheck icon={ checkIcon } style={ { fill: '#FFFFFF' } } />;
-		case 'patched':
-			return <VulnerabilityMitigated />;
-		default:
 	}
 }
 
@@ -140,16 +122,6 @@ export const StyledVulnerabilitySuccess = styled( VulnerabilitySuccess )`
 
 export const StyledSuccessText = styled( Text )`
 	padding: ${ ( { theme: { getSize } } ) => `0 ${ getSize( 0.5 ) }` };
-`;
-
-export const StyledStatusCheck = styled( Icon )`
-	background-color: #438C56;
-	border-radius: 2rem;
-`;
-
-export const StyledStatusRedCircle = styled( Icon )`
-	background-color: #FFABAF;
-	border-radius: 2rem;
 `;
 
 // Table-specific styles

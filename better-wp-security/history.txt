@@ -1112,4 +1112,21 @@
 	Enhancement: Site Scans now run four times daily to detect new vulnerabilities.
 	Tweak: Make frontend JS code compatible with React 18.
 9.4.1 - 2025-09-15 - Volodymyr Shelmuk
-    Bug Fix: Missing assets in release 9.4.0.
+	Bug Fix: Missing assets in release 9.4.0.
+9.4.2 - 2025-10-28 - Volodymyr Shelmuk
+	Bug Fix: PHP notice about early translations loading on the settings screen.
+9.4.3 - 2025-11-18 - Volodymyr Shelmuk
+	Enhancement: Send notification about new vulnerabilities found during manual scan.
+	Tweak: Show mitigated vulnerabilities and ensure all unresolved vulnerabilities are visible on the Site Scan page.
+9.4.4 - 2026-01-29 - Justin Frydman, Volodymyr Shelmuk
+	Tweak: The Solid Security Basic and Solid Security Pro plugins can no longer be active at the same time.
+	Tweak: Config files now show "Solid Security" instead of "iThemes Security".
+	Tweak: Improved Database Backups dashboard widget when the feature is disabled.
+	Tweak: Clarify the 2FA onboarding email confirmation message.
+	Tweak: All Gutenberg blocks use API version 3.
+	Security: Update the "tmp" npm package.
+	Bug Fix: Vulnerable Software dashboard card didn't render properly.
+	Bug Fix: Firewall rules that depend on HTTP headers didn't work correctly in all cases.
+	Bug Fix: PHP Warning: Undefined array key 1 core/admin-pages/logs-list-table.php.
+	Bug Fix: Logs will appear in the correct order regardless of database version.
+	Bug Fix: PHP Warning: Array offset on value of type null core/modules/security-check-pro/class-itsec-security-check-pro.php.

@@ -17,6 +17,12 @@ class ITSEC_Site_Scanner_Mail {
 	 * @return bool
 	 */
 	public static function send( Scan $scan ) {
+		$nc = ITSEC_Core::get_notification_center();
+
+		if ( ! $nc->is_notification_enabled( 'malware-scheduling' ) ) {
+			return true;
+		}
+
 		if ( $scan->get_status() !== Status::WARN ) {
 			// Don't send it if it's clean, has only muted issues or errors
 			return true;
@@ -50,8 +56,8 @@ class ITSEC_Site_Scanner_Mail {
 		if ( $issues ) {
 			$lead = sprintf( esc_html(
 				_n(
-					'The scheduled site scan found %1$s issue when scanning %2$s.',
-					'The scheduled site scan found %1$s issues when scanning %2$s.',
+					'The site scan found %1$s issue when scanning %2$s.',
+					'The site scan found %1$s issues when scanning %2$s.',
 					$issues,
 					'better-wp-security'
 				)
@@ -71,8 +77,8 @@ class ITSEC_Site_Scanner_Mail {
 			} else {
 				$lead = sprintf( esc_html(
 					_n(
-						'The scheduled site scan encountered %1$s error when scanning %2$s.',
-						'The scheduled site scan encountered %1$s errors when scanning %2$s.',
+						'The site scan encountered %1$s error when scanning %2$s.',
+						'The site scan encountered %1$s errors when scanning %2$s.',
 						$errors,
 						'better-wp-security'
 					)
@@ -110,17 +116,17 @@ class ITSEC_Site_Scanner_Mail {
 			case 'scan-failure-server-error':
 			case 'scan-failure-client-error':
 			case 'error':
-				return esc_html__( 'Scheduled site scan resulted in an error', 'better-wp-security' );
+				return esc_html__( 'Site scan resulted in an error', 'better-wp-security' );
 			case 'clean':
-				return esc_html__( 'Scheduled site scan found no issues.', 'better-wp-security' );
+				return esc_html__( 'Site scan found no issues.', 'better-wp-security' );
 			default:
 				require_once( dirname( __FILE__ ) . '/util.php' );
 
 				if ( $codes = ITSEC_Site_Scanner_Util::translate_findings_code( $code ) ) {
-					return wp_sprintf( esc_html__( 'Scheduled site scan report: %l', 'better-wp-security' ), $codes );
+					return wp_sprintf( esc_html__( 'Site scan report: %l', 'better-wp-security' ), $codes );
 				}
 
-				return esc_html__( 'Scheduled site scan found warnings', 'better-wp-security' );
+				return esc_html__( 'Site scan found warnings', 'better-wp-security' );
 		}
 	}
 

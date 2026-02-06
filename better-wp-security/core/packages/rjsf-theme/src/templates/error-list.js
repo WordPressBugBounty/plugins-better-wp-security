@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { ErrorList as Wrapped } from '@ithemes/security-components';
+import { ErrorList as Wrapped } from '@ithemes/security-ui';
 
 export default function ErrorListTemplate( { errors } ) {
 	return (

@@ -1,6 +1,7 @@
 <?php
 
 use iThemesSecurity\Contracts\Runnable;
+use iThemesSecurity\Site_Scanner\Issue;
 use iThemesSecurity\Site_Scanner\Repository\Scans_Repository;
 use iThemesSecurity\Site_Scanner\Repository\Vulnerabilities_Options;
 use iThemesSecurity\Site_Scanner\Repository\Vulnerabilities_Repository;
@@ -175,8 +176,9 @@ class ITSEC_Site_Scanner implements Runnable {
 			 *
 			 * @param array $vulnerabilities The new vulnerabilities set.
 			 * @param array $existing        The existing vulnerabilities.
+			 * @param Scan  $scan            The scan that was performed.
 			 */
-			do_action( 'itsec_software_vulnerabilities_changed', $vulnerabilities, $existing );
+			do_action( 'itsec_software_vulnerabilities_changed', $vulnerabilities, $existing, $scan );
 		}
 
 		$counts['total'] = array_sum( $counts );
@@ -184,6 +186,71 @@ class ITSEC_Site_Scanner implements Runnable {
 		do_action( 'stellarwp/telemetry/ithemes-security/event', 'site-scan', [
 			'vulnerabilities' => $counts,
 		] );
+
+		$this->send_notification( $existing, $scan );
+	}
+
+	/**
+	 * @param array $existing
+	 * @param Scan $scan
+	 *
+	 * @return void
+	 */
+	private function send_notification( $existing, $scan ) {
+		if ( $scan->is_error() ) {
+			if ( $scan->get_error()->get_error_message( 'itsec-temporary-server-error' ) ) {
+				return;
+			}
+
+			if ( $scan->get_error()->get_error_message( 'rate_limit_exceeded' ) ) {
+				return;
+			}
+		}
+
+		if ( ITSEC_Lib_Remote_Messages::has_action( 'malware-scanner-disable-malware-warnings' ) ) {
+			return;
+		}
+
+		ITSEC_Site_Scanner_Mail::send(
+			$this->prepare_scan_for_notification( $scan, $existing )
+		);
+	}
+
+	/**
+	 * We should not notify about all issues. So we remove several types of issues here:
+	 * - with priority less than defined in "Notification threshold" setting (medium by default, can be set up by the user)
+	 * - issues were found (and reported) within the previous scan
+	 *
+	 * @param Scan $scan
+	 * @param list<array{
+	 *      type: string,
+	 *      software: array,
+	 *      issues: array,
+	 *      link: string
+	 *  }> $previous_vulnerabilities
+	 *
+	 * @return Scan
+	 */
+	private function prepare_scan_for_notification( Scan $scan, array $previous_vulnerabilities ): Scan {
+		$threshold = ITSEC_Modules::get_setting('malware-scheduling', 'notification_threshold');
+
+		$links = [];
+		foreach ($previous_vulnerabilities as $vulnerability) {
+			$links[$vulnerability['link']] = $vulnerability['link'];
+		}
+
+		return $scan->filter_issues( function ( Issue $issue ) use ( $links, $threshold ) {
+			if ($issue->get_priority() < $threshold) {
+				return false;
+			}
+
+			if ( ! $issue instanceof Vulnerability_Issue ) {
+				// We want to filter only previous vulnerabilities
+				return true;
+			}
+
+			return ! isset( $links[ $issue->get_link() ] );
+		});
 	}
 
 	/**

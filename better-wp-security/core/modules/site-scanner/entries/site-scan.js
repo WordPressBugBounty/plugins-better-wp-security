@@ -59,6 +59,7 @@ function transform( apiData ) {
 		id: apiData.id,
 		meta: apiData,
 		_links: apiData._links,
+		status: 'attention',
 	};
 
 	if ( apiData.id === 'google' ) {
@@ -71,6 +72,7 @@ function transform( apiData ) {
 		issue.description = apiData.details.type.label;
 		issue.muted = apiData.resolution?.slug === 'muted';
 		issue.severity = severityLevel( apiData.details?.patch_priority, apiData.details?.score );
+		issue.status = apiData.resolution?.slug === 'patched' ? 'mitigated' : 'attention';
 	}
 	return issue;
 }
@@ -111,7 +113,8 @@ dispatch( store ).registerScanComponentGroup( {
 		const results = await googleStatus( scan.id );
 		const issues = results.filter( ( issue ) => issue.status !== 'clean' );
 		const vulnerabilities = await dispatch( vulnerabilitiesStore ).query( 'siteScanner', {
-			resolution: [ '', 'muted' ],
+			resolution: [ '', 'patched', 'muted' ],
+			per_page: 100,
 		} );
 		const siteScannerIssues = vulnerabilities.concat( issues );
 		return siteScannerIssues.map( transform );

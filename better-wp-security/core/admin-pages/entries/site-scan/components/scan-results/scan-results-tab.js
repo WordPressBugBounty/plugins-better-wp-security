@@ -81,6 +81,7 @@ function ResultsTable( { hasIssues, isScanRunning, isLarge, type } ) {
 						<StyledTypeHeading as="th" text={ __( 'Type', 'better-wp-security' ) } />
 						<Text as="th" text={ __( 'Scan Info', 'better-wp-security' ) } />
 						<Text as="th" text={ __( 'Priority', 'better-wp-security' ) } />
+						<Text as="th" text={ __( 'Status', 'better-wp-security' ) } />
 						<Text as="th" text={ __( 'Action', 'better-wp-security' ) } align="right" />
 					</tr>
 				) : (

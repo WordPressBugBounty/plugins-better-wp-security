@@ -15,11 +15,13 @@ import store from '../../store';
  * Internal dependencies
  */
 import {
+	StyledCombinedColumns,
 	StyledDetailsContainer,
 	StyledListDetailsContainer,
 	StyledListItem,
 } from './styles';
 import { Priority } from '@ithemes/security-ui';
+import ScanIssueStatus from './scan-issue-status';
 
 export default function ListItem( { icon, issue, children } ) {
 	const { component } = useSelect( ( select ) => ( {
@@ -39,9 +41,11 @@ export default function ListItem( { icon, issue, children } ) {
 						}
 					</>
 				</div>
-
 				<div>
-					<Priority priority={ issue.severity } />
+					<StyledCombinedColumns>
+						<Priority priority={ issue.severity } />
+						<ScanIssueStatus issue={ issue } />
+					</StyledCombinedColumns>
 				</div>
 				<Button
 					aria-controls={ `solid-scan-result-${ issue.component + '-' + issue.id }` }

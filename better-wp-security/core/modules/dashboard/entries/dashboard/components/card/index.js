@@ -19,10 +19,10 @@ import { Surface } from '@ithemes/ui';
 /**
  * Internal dependencies
  */
-import { withProps } from '@ithemes/security-hocs';
 import { useCardElementQueries, useCardRenderer } from '../../cards';
 import CardUnknown from '../empty-states/card-unknown';
 import CardCrash from '../empty-states/card-crash';
+import CardModuleInactive from '../empty-states/card-module-inactive';
 import './style.scss';
 
 const StyledCard = styled( Surface )`
@@ -34,17 +34,26 @@ const StyledCard = styled( Surface )`
 
 function UnforwardedCard( { id, dashboardId, className, gridWidth, children, ...rest }, ref ) {
 	const { card, config } = useSelect(
-		( select ) => ( {
-			card: select( 'ithemes-security/dashboard' ).getDashboardCard( id ),
-			config:
-				select( 'ithemes-security/dashboard' ).getDashboardCardConfig(
-					id
-				) || {},
-		} ),
+		( select ) => {
+			const dashboardSelect = select( 'ithemes-security/dashboard' );
+			return {
+				card: dashboardSelect.getDashboardCard( id ),
+				config: dashboardSelect.getDashboardCardConfig( id ),
+			};
+		},
 		[ id ]
 	);
-	const CardRender = useCardRenderer( config );
-	const eqProps = useCardElementQueries( config, rest.style, gridWidth );
+
+	// Use a safe default config to prevent crashes in hooks
+	const safeConfig = config || { slug: '', type: '' };
+
+	// Hooks must be called unconditionally
+	const CardRender = useCardRenderer( safeConfig );
+	const eqProps = useCardElementQueries( safeConfig, rest.style, gridWidth );
+
+	if ( ! card ) {
+		return null;
+	}
 
 	if ( card.card === 'unknown' ) {
 		return (
@@ -63,22 +72,30 @@ function UnforwardedCard( { id, dashboardId, className, gridWidth, children, ...
 		);
 	}
 
-	if ( ! CardRender ) {
+	// Card config missing - card type not available or module disabled
+	const isConfigMissing = card &&
+		card.card !== 'unknown' &&
+		( ! config || ! CardRender );
+
+	if ( isConfigMissing ) {
 		return (
 			<StyledCard
 				as="article"
 				className={ classnames(
 					className,
 					'itsec-card',
-					'itsec-card--no-rendered'
+					'itsec-card--no-rendered',
+					'itsec-card--module-inactive'
 				) }
 				ref={ ref }
 				{ ...rest }
 			>
-				<CardCrash card={ card } config={ config } />
+				<CardModuleInactive card={ card } config={ config } dashboardId={ dashboardId } />
 			</StyledCard>
 		);
 	}
+
+	const FallbackView = isConfigMissing ? CardModuleInactive : CardCrash;
 
 	return (
 		<StyledCard
@@ -90,7 +107,14 @@ function UnforwardedCard( { id, dashboardId, className, gridWidth, children, ...
 			{ ...eqProps }
 		>
 			<ErrorBoundary
-				FallbackComponent={ withProps( { card, config } )( CardCrash ) }
+				fallback={
+					<FallbackView
+						card={ card }
+						config={ config }
+						dashboardId={ dashboardId }
+						isModuleInactive={ isConfigMissing }
+					/>
+				}
 			>
 				<CardRender
 					card={ card }

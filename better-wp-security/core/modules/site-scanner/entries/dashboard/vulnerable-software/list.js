@@ -12,10 +12,10 @@ import { ListItem, Text, TextVariant } from '@ithemes/ui';
  * Internal dependencies
  */
 import { useGlobalNavigationUrl } from '@ithemes/security-utils';
+import { PatchPriority } from '@ithemes/security-ui';
 import { EmptyState } from './index';
 import {
 	vulnerabilityIcon,
-	statusIcon,
 	StyledListHeading,
 	StyledList,
 	StyledTopRow,
@@ -23,7 +23,7 @@ import {
 	StyledLink,
 	StyledStatusResolution,
 } from './styles';
-import { PatchPriority } from '@ithemes/security.pages.vulnerabilities';
+import VulnerabilityStatusIcon from './vulnerability-status-icon';
 
 export default function VulnerabilityList( { cardData } ) {
 	return (
@@ -58,7 +58,7 @@ function VulnerabilityListItem( { vulnerability } ) {
 			</StyledTopRow>
 			<StyledBottomRow>
 				<StyledStatusResolution
-					icon={ statusIcon( vulnerability.resolution.slug ) }
+					icon={ <VulnerabilityStatusIcon vulnerability={ vulnerability } /> }
 					iconSize={ 16 }
 					text={ vulnerability.resolution.label }
 				/>

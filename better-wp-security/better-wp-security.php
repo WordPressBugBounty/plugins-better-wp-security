@@ -6,7 +6,7 @@
  * Description: Shield your site from cyberattacks and prevent security vulnerabilities. The only security plugin you need for a solid foundation.
  * Author: SolidWP
  * Author URI: https://solidwp.com
- * Version: 9.4.1
+ * Version: 9.4.4
  * Text Domain: better-wp-security
  * Network: True
  * License: GPLv2
@@ -34,8 +34,39 @@ if ( version_compare( $GLOBALS['wp_version'], '6.5', '<' ) ) {
 	return;
 }
 
+/*
+ * Register an initial duplicate activation hook to make sure both plugins can't be active at the same time
+ * otherwise, remove the activation hook so ITSEC_Core::handle_activation can replace it.
+ */
+$basic_activate_callback = static function() use ( &$basic_activate_callback ): void {
+	$pro_plugin     = 'ithemes-security-pro/ithemes-security-pro.php';
+	$active_plugins = (array) get_option( 'active_plugins', [] );
+
+	if ( is_multisite() ) {
+		$network_plugins = (array) get_site_option( 'active_sitewide_plugins', [] );
+		$active_plugins  = array_merge( $active_plugins, array_keys( $network_plugins ) );
+	}
+
+	if ( in_array( $pro_plugin, $active_plugins, true ) ) {
+		// No text domain to load here? Might cause PHP notices.
+
+		wp_die(
+			esc_html__(
+				'Solid Security Basic cannot be activated because Solid Security Pro is already active.',
+				'better-wp-security'
+			)
+		);
+	}
+
+	// If we made this far without killing execution, remove this activation hook if Pro isn't
+	// active, so ITSEC_Core::handle_activation can get registered.
+	remove_action( 'activate_' . plugin_basename( __FILE__ ), $basic_activate_callback );
+};
+
+register_activation_hook( __FILE__, $basic_activate_callback );
+
+// Prevent fatal errors if the Pro version is already loaded.
 if ( isset( $itsec_dir ) || class_exists( 'ITSEC_Core' ) ) {
-	include( dirname( __FILE__ ) . '/core/show-multiple-version-notice.php' );
 	return;
 }
 

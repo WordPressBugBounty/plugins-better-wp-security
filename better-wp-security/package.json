@@ -1,7 +1,7 @@
 {
   "name": "ithemes-security",
   "description": "Take the guesswork out of WordPress security. Solid Security offers 30+ ways to lock down WordPress in an easy-to-use WordPress security plugin.",
-  "version": "8.6.0",
+  "version": "8.6.5",
   "author": "iThemes",
   "engines": {
     "npm": "^10",
@@ -56,7 +56,7 @@
     "interweave": "^12.7.2",
     "json-ptr": "^3.0.1",
     "li": "^1.3.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "memize": "^1.1.0",
     "moment": "^2.22.1",
     "motion": "^11.11.17",
@@ -119,7 +119,7 @@
     "sass": "^1.49.9",
     "sass-loader": "^13.0.2",
     "style-loader": "^3.3.1",
-    "tmp": "^0.2.1",
+    "tmp": "^0.2.5",
     "webpack": "^5.73.0",
     "webpack-cli": "^4.6.0",
     "webpack-livereload-plugin": "^3.0.2",
@@ -153,12 +153,6 @@
     "test-unit:update": "npm run test-unit -- --updateSnapshot",
     "test-unit:watch": "npm run test-unit -- --watch",
     "watch": "node ./node_modules/.bin/webpack --watch",
-    "packages-update": "wp-scripts packages-update",
-    "test-up": "bash ./bin/test-up.sh",
-    "test-wpunit": "docker compose exec -T -w /var/www/html/wp-content/plugins/ithemes-security-pro wordpress ./vendor/bin/codecept run wpunit",
-    "test-acceptance": "docker compose exec -T -w /var/www/html/wp-content/plugins/ithemes-security-pro wordpress ./vendor/bin/codecept run acceptance",
-    "test-cli": "docker compose exec -T -w /var/www/html/wp-content/plugins/ithemes-security-pro wordpress ./vendor/bin/codecept run wpcli",
-    "test-upgrade": "docker compose exec -T -w /var/www/html/wp-content/plugins/ithemes-security-pro wordpress ./vendor/bin/codecept run upgrade",
-    "test-build": "docker compose exec -T -w /var/www/html/wp-content/plugins/ithemes-security-pro wordpress ./vendor/bin/codecept build"
+    "packages-update": "wp-scripts packages-update"
   }
 }

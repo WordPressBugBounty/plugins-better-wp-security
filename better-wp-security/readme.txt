@@ -2,8 +2,8 @@
 Contributors: ithemes, timothyblynjacobs, lisacee, solidwp
 Tags: security, malware, two factor authentication, brute force protection, password protection
 Requires at least: 6.5
-Tested up to: 6.8
-Stable tag: 9.4.1
+Tested up to: 6.9
+Stable tag: 9.4.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -186,6 +186,26 @@ Manage more than one WordPress site? Release lockouts and keep your themes, plug
 8. Automated vulnerability patching with Patchstack (Pro)
 
 == Changelog ==
+
+= 9.4.4 =
+* Tweak: The Solid Security Basic and Solid Security Pro plugins can no longer be active at the same time.
+* Tweak: Config files now show "Solid Security" instead of "iThemes Security".
+* Tweak: Improved Database Backups dashboard widget when the feature is disabled.
+* Tweak: Clarify the 2FA onboarding email confirmation message.
+* Tweak: All Gutenberg blocks use API version 3.
+* Security: Update the "tmp" npm package.
+* Bug Fix: Vulnerable Software dashboard card didn't render properly.
+* Bug Fix: Firewall rules that depend on HTTP headers didn't work correctly in all cases.
+* Bug Fix: PHP Warning: Undefined array key 1 core/admin-pages/logs-list-table.php.
+* Bug Fix: Logs will appear in the correct order regardless of database version.
+* Bug Fix: PHP Warning: Array offset on value of type null core/modules/security-check-pro/class-itsec-security-check-pro.php.
+
+= 9.4.3 =
+* Enhancement: Send notification about new vulnerabilities found during manual scan.
+* Tweak: Show mitigated vulnerabilities and ensure all unresolved vulnerabilities are visible on the Site Scan page.
+
+= 9.4.2 =
+* Bug Fix: PHP notice about early translations loading on the settings screen.
 
 = 9.4.1 =
 * Bug Fix: Missing assets in release 9.4.0.

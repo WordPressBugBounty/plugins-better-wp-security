@@ -12,17 +12,17 @@ import { Text } from '@ithemes/ui';
  * Internal dependencies
  */
 import { useGlobalNavigationUrl } from '@ithemes/security-utils';
+import { PatchPriority } from '@ithemes/security-ui';
 import { EmptyState } from './index';
 import {
 	vulnerabilityIcon,
-	statusIcon,
 	StyledVulnerabilityName,
 	StyledVulnerabilityVersion,
 	StyledVulnerabilityDetail,
 	StyledVulnerability,
 	StyledTableSection,
 } from './styles';
-import { PatchPriority } from '@ithemes/security.pages.vulnerabilities';
+import VulnerabilityStatusIcon from './vulnerability-status-icon';
 
 export default function VulnerabilityTable( { cardData, isWide } ) {
 	return (
@@ -72,7 +72,7 @@ function VulnerabilityTableRow( { vulnerability, isWide } ) {
 			</td>
 			<td>
 				<Text
-					icon={ statusIcon( vulnerability.resolution.slug ) }
+					icon={ <VulnerabilityStatusIcon vulnerability={ vulnerability } /> }
 					iconSize={ 16 }
 					text={ vulnerability.resolution.label }
 				/>
