@@ -1130,3 +1130,5 @@
 	Bug Fix: PHP Warning: Undefined array key 1 core/admin-pages/logs-list-table.php.
 	Bug Fix: Logs will appear in the correct order regardless of database version.
 	Bug Fix: PHP Warning: Array offset on value of type null core/modules/security-check-pro/class-itsec-security-check-pro.php.
+9.4.5 - 2026-02-11 - Volodymyr Shelmuk
+	Tweak: Ensure generated Nginx config rules are valid for customized directory structures.

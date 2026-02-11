@@ -741,7 +741,7 @@ final class ITSEC_Lib {
 			return substr( $path, strlen( $prefix ) );
 		}
 
-		return '';
+		return $path;
 	}
 
 	/**

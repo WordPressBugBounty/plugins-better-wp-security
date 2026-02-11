@@ -12,3 +12,4 @@ export { default as useLocalStorage } from './use-local-storage';
 export { default as useMergeRefs } from './use-merge-refs';
 export { default as useSet } from './use-set';
 export { default as useFeatureFlag } from './use-feature-flag';
+export { default as useDetectedIp } from './use-detected-ip';

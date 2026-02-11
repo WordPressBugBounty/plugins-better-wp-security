@@ -10,6 +10,11 @@ import { Button, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
+ * SolidWP dependencies
+ */
+import { MessageList } from '@ithemes/ui';
+
+/**
  * Internal dependencies
  */
 import { RjsfFieldSlot } from '../slot-fill';
@@ -21,7 +26,7 @@ export default function FieldTemplate( props ) {
 		errors,
 		hidden,
 		schema,
-		uiSchema,
+		uiSchema = {},
 		formContext,
 		onChange,
 	} = props;
@@ -33,10 +38,13 @@ export default function FieldTemplate( props ) {
 
 	const { resettable } = getUiOptions( uiSchema );
 
+	const warning = uiSchema[ 'ui:warning' ];
+
 	return (
 		<WrapIfAdditional { ...props }>
 			{ children }
 			<RjsfFieldSlot name={ props.id } fillProps={ props } />
+			{ warning && <MessageList messages={ [ warning ] } type={ 'warning' } /> }
 			{ resettable && (
 				<Button
 					className="itsec-rjsf-reset-field"

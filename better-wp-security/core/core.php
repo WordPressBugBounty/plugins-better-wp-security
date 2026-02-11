@@ -1,5 +1,6 @@
 <?php
 
+use iThemesSecurity\Headers\ITSEC_Headers_Sanitizer;
 use iThemesSecurity\User_Groups;
 use iThemesSecurity\Lib;
 
@@ -27,7 +28,7 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 		 *
 		 * @access private
 		 */
-		private $plugin_build = 4129;
+		private $plugin_build = 4130;
 
 		/**
 		 * Used to distinguish between a user modifying settings and the API modifying settings (such as from Sync
@@ -136,6 +137,7 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 
 			add_action( 'itsec-register-modules', array( $this, 'register_modules' ) );
 			ITSEC_Modules::init_modules();
+			( new ITSEC_Lib_Headers( ITSEC_Modules::get_container()->get( ITSEC_Headers_Sanitizer::class ) ) )->run();
 
 			require( $this->plugin_dir . 'core/lockout.php' );
 			require( $this->plugin_dir . 'core/files.php' );

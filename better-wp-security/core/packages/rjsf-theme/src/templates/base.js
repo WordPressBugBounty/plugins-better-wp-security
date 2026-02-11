@@ -70,6 +70,8 @@ function BaseInputTemplate( props ) {
 
 	const description = uiSchema[ 'ui:description' ] || schema.description;
 
+	const emptyValue = options.emptyValue || '';
+
 	return (
 		<TextControl
 			label={ label }
@@ -86,7 +88,7 @@ function BaseInputTemplate( props ) {
 				'hideError',
 			] ) }
 			onChange={ ( newValue ) =>
-				onChange( newValue === '' ? options.emptyValue : newValue )
+				onChange( newValue === '' ? emptyValue : newValue )
 			}
 			onBlur={
 				onBlur && ( ( e ) => onBlur( inputProps.id, e.target.value ) )

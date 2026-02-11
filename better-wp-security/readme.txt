@@ -3,7 +3,7 @@ Contributors: ithemes, timothyblynjacobs, lisacee, solidwp
 Tags: security, malware, two factor authentication, brute force protection, password protection
 Requires at least: 6.5
 Tested up to: 6.9
-Stable tag: 9.4.4
+Stable tag: 9.4.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -186,6 +186,9 @@ Manage more than one WordPress site? Release lockouts and keep your themes, plug
 8. Automated vulnerability patching with Patchstack (Pro)
 
 == Changelog ==
+
+= 9.4.5 =
+* Tweak: Ensure generated Nginx config rules are valid for customized directory structures.
 
 = 9.4.4 =
 * Tweak: The Solid Security Basic and Solid Security Pro plugins can no longer be active at the same time.

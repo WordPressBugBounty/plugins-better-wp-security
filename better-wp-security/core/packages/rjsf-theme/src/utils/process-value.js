@@ -19,6 +19,11 @@ const nums = new Set( [ 'number', 'integer' ] );
 export function processValue( schema, value ) {
 	// "enum" is a reserved word, so only "type" and "items" can be destructured
 	const { type, items } = schema;
+	const enumValues = normalizeEnumValues( schema );
+	if ( enumValues.includes( value ) ) {
+		return value;
+	}
+
 	if ( value === '' ) {
 		return undefined;
 	} else if ( type === 'array' && items && nums.has( items.type ) ) {
@@ -31,7 +36,6 @@ export function processValue( schema, value ) {
 
 	// If type is undefined, but an enum is present, try and infer the type from
 	// the enum values
-	const enumValues = normalizeEnumValues( schema );
 	if ( enumValues.length > 0 ) {
 		if ( enumValues.every( ( x ) => guessType( x ) === 'number' ) ) {
 			return asNumber( value );

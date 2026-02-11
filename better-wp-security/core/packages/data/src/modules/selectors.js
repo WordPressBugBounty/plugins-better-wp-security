@@ -132,6 +132,10 @@ export function getError( state, module ) {
 	return state.errors[ module ];
 }
 
+export function getResult( state, module ) {
+	return state.results[ module ];
+}
+
 export function __unstableGetAllSettings( state ) {
 	return state.settings;
 }

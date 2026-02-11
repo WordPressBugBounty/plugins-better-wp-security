@@ -10,7 +10,7 @@ import {
 	plugins as pluginIcon,
 	shield,
 	starFilled,
-	warning,
+	caution as warning,
 	wordpress as coreIcon,
 } from '@wordpress/icons';
 
