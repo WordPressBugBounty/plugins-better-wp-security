@@ -1132,3 +1132,5 @@
 	Bug Fix: PHP Warning: Array offset on value of type null core/modules/security-check-pro/class-itsec-security-check-pro.php.
 9.4.5 - 2026-02-11 - Volodymyr Shelmuk
 	Tweak: Ensure generated Nginx config rules are valid for customized directory structures.
+9.4.6 - 2026-02-25 - Volodymyr Shelmuk
+	Enhancement: Update Patchstack details for existing vulnerabilities.

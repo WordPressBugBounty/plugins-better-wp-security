@@ -3,7 +3,7 @@
         'name' => 'ithemes/ithemes-security-pro',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '6189d5fa8ef792aed9224ee32345a06fcd857276',
+        'reference' => '88f3065dc6dd9beed60496d1fbfedc24d68c59bb',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -31,7 +31,7 @@
         'ithemes/ithemes-security-pro' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '6189d5fa8ef792aed9224ee32345a06fcd857276',
+            'reference' => '88f3065dc6dd9beed60496d1fbfedc24d68c59bb',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
