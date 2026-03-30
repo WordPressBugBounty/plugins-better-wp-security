@@ -1134,3 +1134,5 @@
 	Tweak: Ensure generated Nginx config rules are valid for customized directory structures.
 9.4.6 - 2026-02-25 - Volodymyr Shelmuk
 	Enhancement: Update Patchstack details for existing vulnerabilities.
+9.4.7 - 2026-03-30 - Rahula Palu
+	Bug Fix: Prevent email retry loops by ensuring the scheduled notification properties are saved.

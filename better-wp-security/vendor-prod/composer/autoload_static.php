@@ -298,7 +298,7 @@ class ComposerStaticInit21d5536de7b0f1825cc8669e43c80018
         'Two_Factor_Email' => __DIR__ . '/../..' . '/core/modules/two-factor/providers/class.two-factor-email.php',
         'Two_Factor_Provider' => __DIR__ . '/../..' . '/core/modules/two-factor/providers/class.two-factor-provider.php',
         'Two_Factor_Totp' => __DIR__ . '/../..' . '/core/modules/two-factor/providers/class.two-factor-totp.php',
-        'Your\\Namespace\\Container' => __DIR__ . '/..' . '/stellarwp/container-contract/examples/php-di/Container.php',
+        'Your\\Namespace\\Container' => __DIR__ . '/..' . '/stellarwp/container-contract/examples/di52/Container.php',
         'iThemesSecurity\\Actor\\Actor' => __DIR__ . '/../..' . '/core/lib/actor/Actor.php',
         'iThemesSecurity\\Actor\\Actor_Factory' => __DIR__ . '/../..' . '/core/lib/actor/Actor_Factory.php',
         'iThemesSecurity\\Actor\\Import' => __DIR__ . '/../..' . '/core/lib/actor/Import.php',
