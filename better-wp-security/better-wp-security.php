@@ -6,7 +6,7 @@
  * Description: Shield your site from cyberattacks and prevent security vulnerabilities. The only security plugin you need for a solid foundation.
  * Author: Kadence
  * Author URI: https://www.kadencewp.com/
- * Version: 10.0.2
+ * Version: 10.0.3
  * Text Domain: better-wp-security
  * Network: True
  * License: GPLv2

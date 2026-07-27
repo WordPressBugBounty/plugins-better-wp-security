@@ -34,7 +34,7 @@
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "ZxcvbnPhp\\": "src/"
+                    "iThemesSecurity\\Strauss\\ZxcvbnPhp\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -139,7 +139,7 @@
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "Patchstack\\": "src/"
+                    "iThemesSecurity\\Strauss\\Patchstack\\": "src/"
                 }
             },
             "license": [
@@ -190,7 +190,7 @@
             "installation-source": "dist",
             "autoload": {
                 "psr-0": {
-                    "Pimple": "src/"
+                    "iThemesSecurity\\Strauss\\Pimple": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -242,7 +242,7 @@
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "Psr\\Container\\": "src/"
+                    "iThemesSecurity\\Strauss\\Psr\\Container\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -293,7 +293,7 @@
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "StellarWP\\ContainerContract\\": "src/"
+                    "iThemesSecurity\\Strauss\\StellarWP\\ContainerContract\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -356,9 +356,9 @@
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "StellarWP\\Telemetry\\": "src/Telemetry",
-                    "StellarWP\\Telemetry\\Views_Dir\\": "src/views",
-                    "StellarWP\\Telemetry\\Assets_Dir\\": "src/resources"
+                    "iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\": "src/Telemetry",
+                    "iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\Views_Dir\\": "src/views",
+                    "iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\Assets_Dir\\": "src/resources"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -410,7 +410,7 @@
                     "bootstrap.php"
                 ],
                 "psr-4": {
-                    "Symfony\\Polyfill\\Mbstring\\": ""
+                    "iThemesSecurity\\Strauss\\Symfony\\Polyfill\\Mbstring\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",

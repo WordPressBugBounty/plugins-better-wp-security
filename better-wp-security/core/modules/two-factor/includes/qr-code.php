@@ -1,8 +1,14 @@
 <?php
 
 /**
- * This is unchanged from https://github.com/ithemes/itsec-local-qr-code/blob/79712b560ce51d6f9978e66c9585d5c6cceaaa71/vendor/qr-code.php
- * with the exception of the added namespace line.
+ * Based on https://github.com/ithemes/itsec-local-qr-code/blob/79712b560ce51d6f9978e66c9585d5c6cceaaa71/vendor/qr-code.php
+ * with the following local changes:
+ *
+ * - Added the namespace line.
+ * - getMinimumQRCode() sizes the code from the RS block capacity so versions 11-40
+ *   are reachable, instead of the version 1-10 $QR_MAX_LENGTH table.
+ * - Error paths throw \RuntimeException instead of trigger_error( E_USER_ERROR ), so
+ *   callers can recover rather than taking a fatal.
  */
 
 namespace iThemesSecurity\TwoFactor;
@@ -89,7 +95,7 @@ class ITSEC_QRCode {
 				break;
 
 			default :
-				trigger_error( "mode:$mode", E_USER_ERROR );
+				throw new \RuntimeException( "mode:$mode" );
 		}
 	}
 
@@ -361,11 +367,11 @@ class ITSEC_QRCode {
 		}
 
 		if ( $buffer->getLengthInBits() > $totalDataCount * 8 ) {
-			trigger_error( "code length overflow. ("
+			throw new \RuntimeException( "code length overflow. ("
 			               . $buffer->getLengthInBits()
 			               . ">"
 			               . $totalDataCount * 8
-			               . ")", E_USER_ERROR );
+			               . ")" );
 		}
 
 		// end code.
@@ -469,6 +475,18 @@ class ITSEC_QRCode {
 		return $data;
 	}
 
+	/**
+	 * Get the smallest QR code capable of holding the given data.
+	 *
+	 * @since 10.0.3 Supports payloads requiring versions 11-40.
+	 *
+	 * @param string $data              The data to encode.
+	 * @param int    $errorCorrectLevel The error correction level.
+	 *
+	 * @return ITSEC_QRCode
+	 *
+	 * @throws \RuntimeException If the data exceeds the maximum QR code capacity.
+	 */
 	static function getMinimumQRCode( $data, $errorCorrectLevel ) {
 
 		$mode = ITSEC_QRUtil::getMode( $data );
@@ -478,15 +496,32 @@ class ITSEC_QRCode {
 		$qr->addData( $data, $mode );
 
 		$qrData = $qr->getData( 0 );
-		$length = $qrData->getLength();
 
-		for ( $typeNumber = 1; $typeNumber <= 40; $typeNumber ++ ) {
-			if ( $length <= ITSEC_QRUtil::getMaxLength( $typeNumber, $mode, $errorCorrectLevel ) ) {
-				$qr->setTypeNumber( $typeNumber );
+		$payloadBuffer = new ITSEC_QRBitBuffer();
+		$qrData->write( $payloadBuffer );
+		$payloadBits = $payloadBuffer->getLengthInBits();
+
+		$typeNumber = null;
+
+		for ( $t = 1; $t <= 40; $t ++ ) {
+			$neededBits = 4 + $qrData->getLengthInBits( $t ) + $payloadBits;
+
+			$totalDataCount = 0;
+			foreach ( ITSEC_QRRSBlock::getRSBlocks( $t, $errorCorrectLevel ) as $rsBlock ) {
+				$totalDataCount += $rsBlock->getDataCount();
+			}
+
+			if ( $neededBits <= $totalDataCount * 8 ) {
+				$typeNumber = $t;
 				break;
 			}
 		}
 
+		if ( $typeNumber === null ) {
+			throw new \RuntimeException( 'QR payload exceeds the maximum QR code capacity (version 40).' );
+		}
+
+		$qr->setTypeNumber( $typeNumber );
 		$qr->make();
 
 		return $qr;
@@ -672,7 +707,7 @@ class ITSEC_QRUtil {
 				$e = 3;
 				break;
 			default :
-				trigger_error( "e:$errorCorrectLevel", E_USER_ERROR );
+				throw new \RuntimeException( "e:$errorCorrectLevel" );
 		}
 
 		switch ( $mode ) {
@@ -689,7 +724,7 @@ class ITSEC_QRUtil {
 				$m = 3;
 				break;
 			default :
-				trigger_error( "m:$mode", E_USER_ERROR );
+				throw new \RuntimeException( "m:$mode" );
 		}
 
 		return self::$QR_MAX_LENGTH[ $t ][ $e ][ $m ];
@@ -728,7 +763,7 @@ class ITSEC_QRUtil {
 				return ( ( $i * $j ) % 3 + ( $i + $j ) % 2 ) % 2 == 0;
 
 			default :
-				trigger_error( "mask:$maskPattern", E_USER_ERROR );
+				throw new \RuntimeException( "mask:$maskPattern" );
 		}
 	}
 
@@ -1249,7 +1284,7 @@ class ITSEC_QRRSBlock {
 			case ITSEC_QR_ERROR_CORRECT_LEVEL_H :
 				return self::$QR_RS_BLOCK_TABLE[ ( $typeNumber - 1 ) * 4 + 3 ];
 			default :
-				trigger_error( "tn:$typeNumber/ecl:$errorCorrectLevel", E_USER_ERROR );
+				throw new \RuntimeException( "tn:$typeNumber/ecl:$errorCorrectLevel" );
 		}
 	}
 }
@@ -1304,7 +1339,7 @@ class ITSEC_ITSEC_QRNumber extends ITSEC_QRData {
 			return $c - ITSEC_QRUtil::toCharCode( '0' );
 		}
 
-		trigger_error( "illegal char : $c", E_USER_ERROR );
+		throw new \RuntimeException( "illegal char : $c" );
 	}
 }
 
@@ -1333,7 +1368,7 @@ class ITSEC_ITSEC_QRKanji extends ITSEC_QRData {
 			} elseif ( 0xE040 <= $c && $c <= 0xEBBF ) {
 				$c -= 0xC140;
 			} else {
-				trigger_error( "illegal char at " . ( $i + 1 ) . "/$c", E_USER_ERROR );
+				throw new \RuntimeException( "illegal char at " . ( $i + 1 ) . "/$c" );
 			}
 
 			$c = ( ( $c >> 8 ) & 0xff ) * 0xC0 + ( $c & 0xff );
@@ -1344,7 +1379,7 @@ class ITSEC_ITSEC_QRKanji extends ITSEC_QRData {
 		}
 
 		if ( $i < strlen( $data ) ) {
-			trigger_error( "illegal char at " . ( $i + 1 ), E_USER_ERROR );
+			throw new \RuntimeException( "illegal char at " . ( $i + 1 ) );
 		}
 	}
 
@@ -1408,7 +1443,7 @@ class ITSEC_ITSEC_QRAlphaNum extends ITSEC_QRData {
 				case ITSEC_QRUtil::toCharCode( ':' ) :
 					return 44;
 				default :
-					trigger_error( "illegal char : $c", E_USER_ERROR );
+					throw new \RuntimeException( "illegal char : $c" );
 			}
 		}
 
@@ -1486,7 +1521,7 @@ abstract class ITSEC_QRData {
 				case ITSEC_QR_MODE_KANJI      :
 					return 8;
 				default :
-					trigger_error( "mode:$this->mode", E_USER_ERROR );
+					throw new \RuntimeException( "mode:$this->mode" );
 			}
 
 		} elseif ( $type < 27 ) {
@@ -1503,7 +1538,7 @@ abstract class ITSEC_QRData {
 				case ITSEC_QR_MODE_KANJI      :
 					return 10;
 				default :
-					trigger_error( "mode:$this->mode", E_USER_ERROR );
+					throw new \RuntimeException( "mode:$this->mode" );
 			}
 
 		} elseif ( $type < 41 ) {
@@ -1520,11 +1555,11 @@ abstract class ITSEC_QRData {
 				case ITSEC_QR_MODE_KANJI      :
 					return 12;
 				default :
-					trigger_error( "mode:$this->mode", E_USER_ERROR );
+					throw new \RuntimeException( "mode:$this->mode" );
 			}
 
 		} else {
-			trigger_error( "mode:$this->mode", E_USER_ERROR );
+			throw new \RuntimeException( "mode:$this->mode" );
 		}
 	}
 
@@ -1573,7 +1608,7 @@ class ITSEC_QRMath {
 	static function glog( $n ) {
 
 		if ( $n < 1 ) {
-			trigger_error( "log($n)", E_USER_ERROR );
+			throw new \RuntimeException( "log($n)" );
 		}
 
 		return self::$QR_MATH_LOG_TABLE[ $n ];

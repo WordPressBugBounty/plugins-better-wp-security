@@ -22,17 +22,12 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
- * Modified using Strauss.
- * @see https://github.com/BrianHenryIE/strauss
  */
-
 namespace iThemesSecurity\Strauss\Pimple\Psr11;
 
 use iThemesSecurity\Strauss\Pimple\Container as PimpleContainer;
 use iThemesSecurity\Strauss\Pimple\Exception\UnknownIdentifierException;
 use iThemesSecurity\Strauss\Psr\Container\ContainerInterface;
-
 /**
  * Pimple PSR-11 service locator.
  *
@@ -42,20 +37,17 @@ class ServiceLocator implements ContainerInterface
 {
     private $container;
     private $aliases = [];
-
     /**
-     * @param PimpleContainer $container The Container instance used to locate services
+     * @param \PimpleContainer $container The Container instance used to locate services
      * @param array           $ids       Array of service ids that can be located. String keys can be used to define aliases
      */
     public function __construct(PimpleContainer $container, array $ids)
     {
         $this->container = $container;
-
         foreach ($ids as $key => $id) {
             $this->aliases[\is_int($key) ? $id : $key] = $id;
         }
     }
-
     /**
      * {@inheritdoc}
      */
@@ -64,10 +56,8 @@ class ServiceLocator implements ContainerInterface
         if (!isset($this->aliases[$id])) {
             throw new UnknownIdentifierException($id);
         }
-
         return $this->container[$this->aliases[$id]];
     }
-
     /**
      * {@inheritdoc}
      */

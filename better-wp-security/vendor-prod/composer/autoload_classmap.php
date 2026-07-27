@@ -6,9 +6,9 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'ComposerAutoloaderInit21d5536de7b0f1825cc8669e43c80018' => $vendorDir . '/composer/autoload_real.php',
+    'ComposerAutoloaderInit0a91749f1cc81fb2309046dd7d88144f' => $vendorDir . '/composer/autoload_real.php',
     'Composer\\Autoload\\ClassLoader' => $vendorDir . '/composer/ClassLoader.php',
-    'Composer\\Autoload\\ComposerStaticInit21d5536de7b0f1825cc8669e43c80018' => $vendorDir . '/composer/autoload_static.php',
+    'Composer\\Autoload\\ComposerStaticInit0a91749f1cc81fb2309046dd7d88144f' => $vendorDir . '/composer/autoload_static.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'ITSEC_Admin_Notice' => $baseDir . '/core/lib/admin-notices/interface-itsec-admin-notice.php',
     'ITSEC_Admin_Notice_Action' => $baseDir . '/core/lib/admin-notices/actions/interface-itsec-admin-notice-action.php',
@@ -228,7 +228,6 @@ return array(
     'Two_Factor_Email' => $baseDir . '/core/modules/two-factor/providers/class.two-factor-email.php',
     'Two_Factor_Provider' => $baseDir . '/core/modules/two-factor/providers/class.two-factor-provider.php',
     'Two_Factor_Totp' => $baseDir . '/core/modules/two-factor/providers/class.two-factor-totp.php',
-    'Your\\Namespace\\Container' => $vendorDir . '/stellarwp/container-contract/examples/di52/Container.php',
     'iThemesSecurity\\Actor\\Actor' => $baseDir . '/core/lib/actor/Actor.php',
     'iThemesSecurity\\Actor\\Actor_Factory' => $baseDir . '/core/lib/actor/Actor_Factory.php',
     'iThemesSecurity\\Actor\\Import' => $baseDir . '/core/lib/actor/Import.php',
@@ -279,6 +278,7 @@ return array(
     'iThemesSecurity\\Headers\\ITSEC_Headers_Sanitizer' => $baseDir . '/core/lib/headers/class-itsec-headers-sanitizer.php',
     'iThemesSecurity\\Lib\\Background_Process' => $baseDir . '/core/lib/Background_Process.php',
     'iThemesSecurity\\Lib\\Config_Password_Requirement' => $baseDir . '/core/lib/Config_Password_Requirement.php',
+    'iThemesSecurity\\Lib\\Harbor\\Harbor_Provider' => $baseDir . '/core/lib/harbor/Harbor_Provider.php',
     'iThemesSecurity\\Lib\\Legacy_Password_Requirement' => $baseDir . '/core/lib/Legacy_Password_Requirement.php',
     'iThemesSecurity\\Lib\\Lockout\\Context' => $baseDir . '/core/lib/lockout/abstract-context.php',
     'iThemesSecurity\\Lib\\Lockout\\Execute_Lock\\Context' => $baseDir . '/core/lib/lockout/execute-lock/abstract-context.php',
@@ -433,6 +433,7 @@ return array(
     'iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\Telemetry\\Telemetry_Subscriber' => $vendorDir . '/stellarwp/telemetry/src/Telemetry/Telemetry/Telemetry_Subscriber.php',
     'iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\Uninstall' => $vendorDir . '/stellarwp/telemetry/src/Telemetry/Uninstall.php',
     'iThemesSecurity\\Strauss\\Symfony\\Polyfill\\Mbstring\\Mbstring' => $vendorDir . '/symfony/polyfill-mbstring/Mbstring.php',
+    'iThemesSecurity\\Strauss\\Your\\Namespace\\Container' => $vendorDir . '/stellarwp/container-contract/examples/di52/Container.php',
     'iThemesSecurity\\Strauss\\ZxcvbnPhp\\Feedback' => $vendorDir . '/bjeavons/zxcvbn-php/src/Feedback.php',
     'iThemesSecurity\\Strauss\\ZxcvbnPhp\\Matcher' => $vendorDir . '/bjeavons/zxcvbn-php/src/Matcher.php',
     'iThemesSecurity\\Strauss\\ZxcvbnPhp\\Matchers\\BaseMatch' => $vendorDir . '/bjeavons/zxcvbn-php/src/Matchers/BaseMatch.php',

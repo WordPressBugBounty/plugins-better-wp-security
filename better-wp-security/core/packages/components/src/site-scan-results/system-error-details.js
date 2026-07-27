@@ -17,7 +17,7 @@ function SystemErrorDetails( { results } ) {
 				status="error"
 				description={ __(
 					'The scan failed to properly scan the site.',
-					'LION'
+					'better-wp-security'
 				) }
 			>
 				{ results.errors.map( ( entry, i ) => (

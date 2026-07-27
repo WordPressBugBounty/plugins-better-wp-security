@@ -4,71 +4,65 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit21d5536de7b0f1825cc8669e43c80018
+class ComposerStaticInit0a91749f1cc81fb2309046dd7d88144f
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
-        'Z' =>
+        'i' =>
         array (
-            'ZxcvbnPhp\\' => 10,
-        ),
-        'S' =>
-        array (
-            'Symfony\\Polyfill\\Mbstring\\' => 26,
-            'StellarWP\\Telemetry\\Views_Dir\\' => 30,
-            'StellarWP\\Telemetry\\Assets_Dir\\' => 31,
-            'StellarWP\\Telemetry\\' => 20,
-            'StellarWP\\ContainerContract\\' => 28,
-        ),
-        'P' =>
-        array (
-            'Psr\\Container\\' => 14,
-            'Patchstack\\' => 11,
+            'iThemesSecurity\\Strauss\\ZxcvbnPhp\\' => 34,
+            'iThemesSecurity\\Strauss\\Symfony\\Polyfill\\Mbstring\\' => 50,
+            'iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\Views_Dir\\' => 54,
+            'iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\Assets_Dir\\' => 55,
+            'iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\' => 44,
+            'iThemesSecurity\\Strauss\\StellarWP\\ContainerContract\\' => 52,
+            'iThemesSecurity\\Strauss\\Psr\\Container\\' => 38,
+            'iThemesSecurity\\Strauss\\Patchstack\\' => 35,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'ZxcvbnPhp\\' =>
+        'iThemesSecurity\\Strauss\\ZxcvbnPhp\\' =>
         array (
             0 => __DIR__ . '/..' . '/bjeavons/zxcvbn-php/src',
         ),
-        'Symfony\\Polyfill\\Mbstring\\' =>
+        'iThemesSecurity\\Strauss\\Symfony\\Polyfill\\Mbstring\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
         ),
-        'StellarWP\\Telemetry\\Views_Dir\\' =>
+        'iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\Views_Dir\\' =>
         array (
             0 => __DIR__ . '/..' . '/stellarwp/telemetry/src/views',
         ),
-        'StellarWP\\Telemetry\\Assets_Dir\\' =>
+        'iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\Assets_Dir\\' =>
         array (
             0 => __DIR__ . '/..' . '/stellarwp/telemetry/src/resources',
         ),
-        'StellarWP\\Telemetry\\' =>
+        'iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\' =>
         array (
             0 => __DIR__ . '/..' . '/stellarwp/telemetry/src/Telemetry',
         ),
-        'StellarWP\\ContainerContract\\' =>
+        'iThemesSecurity\\Strauss\\StellarWP\\ContainerContract\\' =>
         array (
             0 => __DIR__ . '/..' . '/stellarwp/container-contract/src',
         ),
-        'Psr\\Container\\' =>
+        'iThemesSecurity\\Strauss\\Psr\\Container\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
         ),
-        'Patchstack\\' =>
+        'iThemesSecurity\\Strauss\\Patchstack\\' =>
         array (
             0 => __DIR__ . '/..' . '/patchstack/firewall/src',
         ),
     );
 
     public static $prefixesPsr0 = array (
-        'P' =>
+        'i' =>
         array (
-            'Pimple' =>
+            'iThemesSecurity\\Strauss\\Pimple' =>
             array (
                 0 => __DIR__ . '/..' . '/pimple/pimple/src',
             ),
@@ -76,9 +70,9 @@ class ComposerStaticInit21d5536de7b0f1825cc8669e43c80018
     );
 
     public static $classMap = array (
-        'ComposerAutoloaderInit21d5536de7b0f1825cc8669e43c80018' => __DIR__ . '/..' . '/composer/autoload_real.php',
+        'ComposerAutoloaderInit0a91749f1cc81fb2309046dd7d88144f' => __DIR__ . '/..' . '/composer/autoload_real.php',
         'Composer\\Autoload\\ClassLoader' => __DIR__ . '/..' . '/composer/ClassLoader.php',
-        'Composer\\Autoload\\ComposerStaticInit21d5536de7b0f1825cc8669e43c80018' => __DIR__ . '/..' . '/composer/autoload_static.php',
+        'Composer\\Autoload\\ComposerStaticInit0a91749f1cc81fb2309046dd7d88144f' => __DIR__ . '/..' . '/composer/autoload_static.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'ITSEC_Admin_Notice' => __DIR__ . '/../..' . '/core/lib/admin-notices/interface-itsec-admin-notice.php',
         'ITSEC_Admin_Notice_Action' => __DIR__ . '/../..' . '/core/lib/admin-notices/actions/interface-itsec-admin-notice-action.php',
@@ -298,7 +292,6 @@ class ComposerStaticInit21d5536de7b0f1825cc8669e43c80018
         'Two_Factor_Email' => __DIR__ . '/../..' . '/core/modules/two-factor/providers/class.two-factor-email.php',
         'Two_Factor_Provider' => __DIR__ . '/../..' . '/core/modules/two-factor/providers/class.two-factor-provider.php',
         'Two_Factor_Totp' => __DIR__ . '/../..' . '/core/modules/two-factor/providers/class.two-factor-totp.php',
-        'Your\\Namespace\\Container' => __DIR__ . '/..' . '/stellarwp/container-contract/examples/di52/Container.php',
         'iThemesSecurity\\Actor\\Actor' => __DIR__ . '/../..' . '/core/lib/actor/Actor.php',
         'iThemesSecurity\\Actor\\Actor_Factory' => __DIR__ . '/../..' . '/core/lib/actor/Actor_Factory.php',
         'iThemesSecurity\\Actor\\Import' => __DIR__ . '/../..' . '/core/lib/actor/Import.php',
@@ -349,6 +342,7 @@ class ComposerStaticInit21d5536de7b0f1825cc8669e43c80018
         'iThemesSecurity\\Headers\\ITSEC_Headers_Sanitizer' => __DIR__ . '/../..' . '/core/lib/headers/class-itsec-headers-sanitizer.php',
         'iThemesSecurity\\Lib\\Background_Process' => __DIR__ . '/../..' . '/core/lib/Background_Process.php',
         'iThemesSecurity\\Lib\\Config_Password_Requirement' => __DIR__ . '/../..' . '/core/lib/Config_Password_Requirement.php',
+        'iThemesSecurity\\Lib\\Harbor\\Harbor_Provider' => __DIR__ . '/../..' . '/core/lib/harbor/Harbor_Provider.php',
         'iThemesSecurity\\Lib\\Legacy_Password_Requirement' => __DIR__ . '/../..' . '/core/lib/Legacy_Password_Requirement.php',
         'iThemesSecurity\\Lib\\Lockout\\Context' => __DIR__ . '/../..' . '/core/lib/lockout/abstract-context.php',
         'iThemesSecurity\\Lib\\Lockout\\Execute_Lock\\Context' => __DIR__ . '/../..' . '/core/lib/lockout/execute-lock/abstract-context.php',
@@ -503,6 +497,7 @@ class ComposerStaticInit21d5536de7b0f1825cc8669e43c80018
         'iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\Telemetry\\Telemetry_Subscriber' => __DIR__ . '/..' . '/stellarwp/telemetry/src/Telemetry/Telemetry/Telemetry_Subscriber.php',
         'iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\Uninstall' => __DIR__ . '/..' . '/stellarwp/telemetry/src/Telemetry/Uninstall.php',
         'iThemesSecurity\\Strauss\\Symfony\\Polyfill\\Mbstring\\Mbstring' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/Mbstring.php',
+        'iThemesSecurity\\Strauss\\Your\\Namespace\\Container' => __DIR__ . '/..' . '/stellarwp/container-contract/examples/di52/Container.php',
         'iThemesSecurity\\Strauss\\ZxcvbnPhp\\Feedback' => __DIR__ . '/..' . '/bjeavons/zxcvbn-php/src/Feedback.php',
         'iThemesSecurity\\Strauss\\ZxcvbnPhp\\Matcher' => __DIR__ . '/..' . '/bjeavons/zxcvbn-php/src/Matcher.php',
         'iThemesSecurity\\Strauss\\ZxcvbnPhp\\Matchers\\BaseMatch' => __DIR__ . '/..' . '/bjeavons/zxcvbn-php/src/Matchers/BaseMatch.php',
@@ -570,10 +565,10 @@ class ComposerStaticInit21d5536de7b0f1825cc8669e43c80018
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit21d5536de7b0f1825cc8669e43c80018::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit21d5536de7b0f1825cc8669e43c80018::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit21d5536de7b0f1825cc8669e43c80018::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit21d5536de7b0f1825cc8669e43c80018::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit0a91749f1cc81fb2309046dd7d88144f::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit0a91749f1cc81fb2309046dd7d88144f::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit0a91749f1cc81fb2309046dd7d88144f::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit0a91749f1cc81fb2309046dd7d88144f::$classMap;
 
         }, null, ClassLoader::class);
     }

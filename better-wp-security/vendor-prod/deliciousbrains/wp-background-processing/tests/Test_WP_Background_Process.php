@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit tests for WP_Background_Process.
+ * Unit tests for Ithemes_Ithemes_Security_ProWP_Background_Process.
  *
  * @package WP-Background-Processing
  */
@@ -14,9 +14,9 @@ use PHPUnit\Framework\MockObject\MockObject;
  */
 class Test_WP_Background_Process extends WP_UnitTestCase {
 	/**
-	 * Instance of WP_Background_Process
+	 * Instance of Ithemes_Ithemes_Security_ProWP_Background_Process
 	 *
-	 * @var MockObject|WP_Background_Process|(WP_Background_Process&MockObject)
+	 * @var MockObject|Ithemes_Ithemes_Security_ProWP_Background_Process|(Ithemes_Ithemes_Security_ProWP_Background_Process&MockObject)
 	 */
 	private $wpbp;
 
@@ -28,7 +28,7 @@ class Test_WP_Background_Process extends WP_UnitTestCase {
 	public function setUp(): void {
 		parent::setUp();
 
-		$this->wpbp = $this->getMockForAbstractClass( WP_Background_Process::class );
+		$this->wpbp = $this->getMockForAbstractClass( Ithemes_Ithemes_Security_ProWP_Background_Process::class );
 
 		$this->wpbp->expects( $this->any() )
 		           ->method( 'task' )
@@ -44,7 +44,7 @@ class Test_WP_Background_Process extends WP_UnitTestCase {
 	 */
 	private function getWPBPProperty( string $name ) {
 		try {
-			$property = new ReflectionProperty( 'WP_Background_Process', $name );
+			$property = new ReflectionProperty( 'Ithemes_Ithemes_Security_ProWP_Background_Process', $name );
 		} catch ( Exception $e ) {
 			return new WP_Error( $e->getCode(), $e->getMessage() );
 		}
@@ -63,7 +63,7 @@ class Test_WP_Background_Process extends WP_UnitTestCase {
 	 */
 	private function setWPBPProperty( string $name, $value ) {
 		try {
-			$property = new ReflectionProperty( 'WP_Background_Process', $name );
+			$property = new ReflectionProperty( 'Ithemes_Ithemes_Security_ProWP_Background_Process', $name );
 		} catch ( Exception $e ) {
 			return new WP_Error( $e->getCode(), $e->getMessage() );
 		}
@@ -82,7 +82,7 @@ class Test_WP_Background_Process extends WP_UnitTestCase {
 	 */
 	private function executeWPBPMethod( string $name, ...$args ) {
 		try {
-			$method = new ReflectionMethod( 'WP_Background_Process', $name );
+			$method = new ReflectionMethod( 'Ithemes_Ithemes_Security_ProWP_Background_Process', $name );
 			$method->setAccessible( true );
 
 			return $method->invoke( $this->wpbp, ...$args );
@@ -97,7 +97,7 @@ class Test_WP_Background_Process extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_push_to_queue() {
-		$this->assertClassHasAttribute( 'data', 'WP_Background_Process', 'class has data property' );
+		$this->assertClassHasAttribute( 'data', 'Ithemes_Ithemes_Security_ProWP_Background_Process', 'class has data property' );
 		$this->assertEmpty( $this->getWPBPProperty( 'data' ) );
 
 		$this->wpbp->push_to_queue( 'wibble' );
@@ -114,7 +114,7 @@ class Test_WP_Background_Process extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_save() {
-		$this->assertClassHasAttribute( 'data', 'WP_Background_Process', 'class has data property' );
+		$this->assertClassHasAttribute( 'data', 'Ithemes_Ithemes_Security_ProWP_Background_Process', 'class has data property' );
 		$this->assertEmpty( $this->getWPBPProperty( 'data' ) );
 		$this->assertEmpty( $this->wpbp->get_batches(), 'no batches until save' );
 
@@ -360,7 +360,7 @@ class Test_WP_Background_Process extends WP_UnitTestCase {
 		$this->wpbp->push_to_queue( 'wobble' );
 		$this->wpbp->save();
 		$this->assertCount( 2, $this->wpbp->get_batches() );
-		update_site_option( $this->executeWPBPMethod( 'get_status_key' ), WP_Background_Process::STATUS_CANCELLED );
+		update_site_option( $this->executeWPBPMethod( 'get_status_key' ), Ithemes_Ithemes_Security_ProWP_Background_Process::STATUS_CANCELLED );
 		$this->assertTrue( $this->wpbp->is_cancelled(), 'is_cancelled' );
 		$this->assertCount( 2, $this->wpbp->get_batches() );
 		$this->assertFalse( $cancelled_fired, 'cancelled action not fired yet' );

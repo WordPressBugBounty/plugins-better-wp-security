@@ -1143,3 +1143,6 @@
     Bug Fix: Race condition in file write could empty wp-config.php/.htaccess files.
 10.0.2 - 2026-05-28 - Nexcess
     Bug Fix: Handle WP_Error in login interstitial session creation to prevent fatal errors.
+10.0.3 - 2026-07-27 - Nexcess
+    Tweak: Added Nexcess Licensing through Harbor library.
+    Bug Fix: Prevent local 2FA QR generator fatals on large payloads.

@@ -2,12 +2,12 @@
 
 namespace iThemesSecurity;
 
+use iThemesSecurity\Lib\Harbor\Harbor_Provider;
 use iThemesSecurity\Lib\REST;
 use iThemesSecurity\Lib\Site_Types;
 use iThemesSecurity\Lib\Stellar_Container;
 use iThemesSecurity\Strauss\StellarWP\Telemetry\Config as Telemetry;
 use iThemesSecurity\Strauss\StellarWP\Telemetry\Events\Event as TelemetryEvent;
-use ITSEC_Lib_Headers;
 use ITSEC_Lib_Upgrader;
 use iThemesSecurity\Strauss\Pimple\Container;
 use wpdb;
@@ -156,13 +156,21 @@ return static function ( Container $c ) {
 		return new TelemetryEvent( $c[ Strauss\StellarWP\Telemetry\Telemetry\Telemetry::class ] );
 	};
 
+	$c[ Stellar_Container::class ] = static function ( Container $c ) {
+		return new Stellar_Container( $c );
+	};
+
 	$c[ Telemetry::class ] = static function ( Container $c ) {
 		$telemetry = new Telemetry();
-		$telemetry::set_container( new Stellar_Container( $c ) );
+		$telemetry::set_container( $c[ Stellar_Container::class ]  );
 		$telemetry::set_hook_prefix( 'ithemes-security' );
 		$telemetry::set_stellar_slug( 'solid-security' );
 
 		return $telemetry;
+	};
+
+	$c[ Harbor_Provider::class ] = static function ( Container $c ) {
+		return new Harbor_Provider( $c[ Stellar_Container::class ] );
 	};
 
 	$c[ Headers\ITSEC_Headers_Sanitizer::class ] = static function () {

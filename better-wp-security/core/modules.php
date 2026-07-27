@@ -14,6 +14,7 @@ use iThemesSecurity\Strauss\Pimple\Psr11\Container as Psr11Container;
 use iThemesSecurity\Strauss\Psr\Container\ContainerInterface;
 use iThemesSecurity\Strauss\StellarWP\Telemetry\Config as Telemetry_Config;
 use iThemesSecurity\Strauss\StellarWP\Telemetry\Core as Telemetry_Core;
+use iThemesSecurity\Lib\Harbor\Harbor_Provider;
 
 final class ITSEC_Modules implements Import_Export_Source {
 	const DEPRECATED = [
@@ -844,6 +845,7 @@ final class ITSEC_Modules implements Import_Export_Source {
 			$load( self::get_instance()->pimple );
 			self::get_instance()->container->get( Telemetry_Config::class );
 			Telemetry_Core::instance()->init( ITSEC_Core::get_plugin_file() );
+			self::get_instance()->container->get( Harbor_Provider::class )->run();
 		}
 
 		self::get_instance()->initialized_container = true;

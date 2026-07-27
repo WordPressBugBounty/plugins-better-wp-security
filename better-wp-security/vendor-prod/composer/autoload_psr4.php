@@ -6,12 +6,12 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'ZxcvbnPhp\\' => array($vendorDir . '/bjeavons/zxcvbn-php/src'),
-    'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
-    'StellarWP\\Telemetry\\Views_Dir\\' => array($vendorDir . '/stellarwp/telemetry/src/views'),
-    'StellarWP\\Telemetry\\Assets_Dir\\' => array($vendorDir . '/stellarwp/telemetry/src/resources'),
-    'StellarWP\\Telemetry\\' => array($vendorDir . '/stellarwp/telemetry/src/Telemetry'),
-    'StellarWP\\ContainerContract\\' => array($vendorDir . '/stellarwp/container-contract/src'),
-    'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
-    'Patchstack\\' => array($vendorDir . '/patchstack/firewall/src'),
+    'iThemesSecurity\\Strauss\\ZxcvbnPhp\\' => array($vendorDir . '/bjeavons/zxcvbn-php/src'),
+    'iThemesSecurity\\Strauss\\Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
+    'iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\Views_Dir\\' => array($vendorDir . '/stellarwp/telemetry/src/views'),
+    'iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\Assets_Dir\\' => array($vendorDir . '/stellarwp/telemetry/src/resources'),
+    'iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\' => array($vendorDir . '/stellarwp/telemetry/src/Telemetry'),
+    'iThemesSecurity\\Strauss\\StellarWP\\ContainerContract\\' => array($vendorDir . '/stellarwp/container-contract/src'),
+    'iThemesSecurity\\Strauss\\Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
+    'iThemesSecurity\\Strauss\\Patchstack\\' => array($vendorDir . '/patchstack/firewall/src'),
 );
