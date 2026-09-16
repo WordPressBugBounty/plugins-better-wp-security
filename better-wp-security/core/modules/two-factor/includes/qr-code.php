@@ -478,7 +478,7 @@ class ITSEC_QRCode {
 	/**
 	 * Get the smallest QR code capable of holding the given data.
 	 *
-	 * @since 10.0.3 Supports payloads requiring versions 11-40.
+	 * @since 9.0.5 Supports payloads requiring versions 11-40.
 	 *
 	 * @param string $data              The data to encode.
 	 * @param int    $errorCorrectLevel The error correction level.

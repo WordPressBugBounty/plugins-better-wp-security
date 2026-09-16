@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { uniqueId, chunk, times, constant } from 'lodash';
+import { uniqueId, chunk } from 'lodash';
 
 /**
  * WordPress dependencies
@@ -13,6 +13,7 @@ import {
 	createRegistryControl,
 } from '@wordpress/data';
 import { default as triggerApiFetch } from '@wordpress/api-fetch';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -241,6 +242,110 @@ function timeout( ms ) {
 	return new Promise( ( resolve ) => setTimeout( resolve, ms ) );
 }
 
+/**
+ * Checks whether a rejected API Fetch request carries a response from the server.
+ *
+ * Requests made with `parse: false` reject with the Response itself when the status is an
+ * error, but reject with a plain error object when the request never completed.
+ *
+ * @param {*} value The rejected value.
+ * @return {boolean} True if the value is a Response.
+ */
+function isResponse( value ) {
+	return (
+		!! value &&
+		typeof value.json === 'function' &&
+		typeof value.status === 'number'
+	);
+}
+
+/**
+ * Restores the header name casing that the batch route reports.
+ *
+ * Fetch lowercases the header names it exposes, but the batch route passes through the
+ * casing WordPress sent, which is how callers look up headers such as `X-Messages-Success`.
+ *
+ * @param {string} name The header name.
+ * @return {string} The canonicalized header name.
+ */
+function canonicalizeHeaderName( name ) {
+	return name.replace( /(^|-)([a-z])/g, ( segment ) => segment.toUpperCase() );
+}
+
+/**
+ * Converts a response into the envelope that the batch route returns for each request.
+ *
+ * @param {Response} response The response to convert.
+ * @return {Promise<{body: *, status: number, headers: Object}>} The envelope.
+ */
+async function toBatchEnvelope( response ) {
+	const headers = {};
+
+	response.headers.forEach( ( value, name ) => {
+		headers[ canonicalizeHeaderName( name ) ] = value;
+	} );
+
+	const body =
+		response.status === 204
+			? null
+			: await response.json().catch( () => ( {
+				code: 'invalid_json',
+				message: __(
+					'The response is not a valid JSON response.',
+					'better-wp-security'
+				),
+			} ) );
+
+	return { body, status: response.status, headers };
+}
+
+/**
+ * Sends a single request from a batch on its own.
+ *
+ * @param {Object} request         The batch request.
+ * @param {string} request.path    Path to request.
+ * @param {string} request.method  HTTP method.
+ * @param {Object} request.body    Request body.
+ * @param {Object} request.headers Request headers.
+ * @return {Promise<{body: *, status: number, headers: Object}>} The envelope.
+ */
+async function apiFetchOne( { path, method, body, headers } ) {
+	try {
+		return await toBatchEnvelope(
+			await triggerApiFetch( {
+				path,
+				method,
+				data: body,
+				headers,
+				parse: false,
+			} )
+		);
+	} catch ( error ) {
+		return isResponse( error )
+			? toBatchEnvelope( error )
+			: { body: error, status: 500, headers: {} };
+	}
+}
+
+/**
+ * Sends each request in a batch on its own, in order.
+ *
+ * Hosts increasingly block the batch route outright, which would otherwise leave every
+ * settings and onboarding save with no way through.
+ *
+ * @param {Array<Object>} requests The batch requests.
+ * @return {Promise<Array<{body: *, status: number, headers: Object}>>} One envelope per request.
+ */
+async function apiFetchIndividually( requests ) {
+	const responses = [];
+
+	for ( const request of requests ) {
+		responses.push( await apiFetchOne( request ) );
+	}
+
+	return responses;
+}
+
 const controls = {
 	AWAIT_PROMISE: ( { promise, delay } ) => {
 		if ( delay ) {
@@ -304,11 +409,23 @@ const controls = {
 	},
 	API_FETCH_BATCH: createRegistryControl(
 		( registry ) => async ( { batch } ) => {
-			const maxItems = await registry
-				.resolveSelect( CORE_STORE_NAME )
-				.getBatchMaxItems();
+			let maxItems;
+			let hasBatchRoute = true;
+
+			try {
+				maxItems = await registry
+					.resolveSelect( CORE_STORE_NAME )
+					.getBatchMaxItems();
+			} catch {
+				/*
+				 * The max items probe is an OPTIONS request to the batch route, so a host that
+				 * blocks the route rejects it before any request has been sent. Resolution
+				 * failures are cached, which keeps this to a single blocked request per page.
+				 */
+				hasBatchRoute = false;
+			}
+
 			const chunks = chunk( batch, maxItems || 25 );
-			const errors = [];
 			const responses = [];
 
 			if ( ! chunks.length ) {
@@ -316,6 +433,13 @@ const controls = {
 			}
 
 			for ( const requests of chunks ) {
+				if ( ! hasBatchRoute ) {
+					responses.push(
+						...( await apiFetchIndividually( requests ) )
+					);
+					continue;
+				}
+
 				try {
 					const response = await controls.API_FETCH( {
 						request: {
@@ -325,23 +449,11 @@ const controls = {
 						},
 					} );
 					responses.push( ...response.responses );
-				} catch ( e ) {
-					errors.push( e );
+				} catch {
 					responses.push(
-						...times(
-							requests.length,
-							constant( {
-								body: e,
-								status: 500,
-								headers: {},
-							} )
-						)
+						...( await apiFetchIndividually( requests ) )
 					);
 				}
-			}
-
-			if ( errors.length === chunks.length ) {
-				throw errors[ 0 ];
 			}
 
 			return responses;

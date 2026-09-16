@@ -764,6 +764,8 @@ final class ITSEC_Lockout {
 	/**
 	 * Executes lockout (locks user out)
 	 *
+	 * @since 9.0.7 Safe to call before pluggable functions are loaded.
+	 *
 	 * @param Execute_Lock\Context|array $context
 	 *
 	 * @return void
@@ -828,11 +830,13 @@ final class ITSEC_Lockout {
 		}
 
 		if ( headers_sent() ) {
-			wp_destroy_current_session();
-			wp_set_current_user( 0 );
+			if ( $current_user instanceof WP_User ) {
+				wp_destroy_current_session();
+				wp_set_current_user( 0 );
 
-			if ( $current_user instanceof WP_User && $current_user->exists() ) {
-				do_action( 'wp_logout', $current_user->ID );
+				if ( $current_user->exists() ) {
+					do_action( 'wp_logout', $current_user->ID );
+				}
 			}
 		} else {
 			if ( $current_user instanceof WP_User && $current_user->exists() ) {

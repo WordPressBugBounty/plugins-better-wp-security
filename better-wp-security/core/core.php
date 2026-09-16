@@ -338,6 +338,10 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 		/**
 		 * Check if there are valid "Manage groups" selected.
 		 *
+		 * A selected group only counts if it could grant the capability to somebody. A user
+		 * group that has no users, roles, canonical roles or minimum role never matches, so
+		 * treating it as valid would leave nobody able to manage Kadence Security.
+		 *
 		 * @return bool
 		 */
 		private function has_valid_manage_groups() {
@@ -345,7 +349,13 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 			$groups = ITSEC_Modules::get_setting( 'global', 'manage_group' );
 
 			foreach ( $groups as $group ) {
-				if ( $source->has( $group ) ) {
+				try {
+					$matchable = $source->find( $group );
+				} catch ( User_Groups\Matchable_Not_Found $e ) {
+					continue;
+				}
+
+				if ( ! $matchable instanceof User_Groups\User_Group || $matchable->is_configured() ) {
 					return true;
 				}
 			}

@@ -340,6 +340,14 @@ class Module implements Runnable, Import_Export_Source {
 
 			try {
 				$this->repository->persist( $user_group );
+
+				if ( ! $user_group->is_configured() ) {
+					$result->add_warning_message( sprintf(
+						/* translators: %s: The imported User Group's label. */
+						__( 'The \'%s\' User Group was imported with no members, so any setting using this group applies to nobody.', 'better-wp-security' ),
+						$config['label']
+					) );
+				}
 			} catch ( \Exception $e ) {
 				$result->add_warning_message( sprintf(
 					__( 'Could not import \'%1$s\' User Group: %2$s', 'better-wp-security' ),

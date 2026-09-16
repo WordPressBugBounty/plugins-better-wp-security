@@ -492,7 +492,7 @@ class Two_Factor_Totp extends Two_Factor_Provider implements ITSEC_Two_Factor_Pr
 	/**
 	 * Generate a QR code locally using the bundled ITSEC_QRCode library and PHP's GD extension.
 	 *
-	 * @since 10.0.3 Falls back to the remote QR service instead of fataling on library errors.
+	 * @since 9.0.5 Falls back to the remote QR service instead of fataling on library errors.
 	 *
 	 * @param string $payload The url-encoded otpauth payload.
 	 *

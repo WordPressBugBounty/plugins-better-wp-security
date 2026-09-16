@@ -1146,3 +1146,6 @@
 10.0.3 - 2026-07-27 - Nexcess
     Tweak: Added Nexcess Licensing through Harbor library.
     Bug Fix: Prevent local 2FA QR generator fatals on large payloads.
+10.0.4 - 2026-09-16 - Nexcess
+    Bug Fix: Settings and setup no longer fail with a "not a valid JSON response" error when a host firewall blocks the batch REST endpoint.
+    Bug Fix: Prevent fatal errors for banned IPs when Security is loaded early by the MU Plugin Loader.
