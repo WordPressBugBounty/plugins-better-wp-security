@@ -1149,3 +1149,5 @@
 10.0.4 - 2026-09-16 - Nexcess
     Bug Fix: Settings and setup no longer fail with a "not a valid JSON response" error when a host firewall blocks the batch REST endpoint.
     Bug Fix: Prevent fatal errors for banned IPs when Security is loaded early by the MU Plugin Loader.
+10.0.5 - 2026-09-30 - Nexcess
+    Bug Fix: Resolved 404 errors when loading settings for features.

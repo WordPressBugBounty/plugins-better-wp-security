@@ -3,7 +3,7 @@ Contributors: ithemes, timothyblynjacobs, lisacee, solidwp
 Tags: security, malware, two factor authentication, brute force protection, password protection
 Requires at least: 6.5
 Tested up to: 7.1
-Stable tag: 10.0.4
+Stable tag: 10.0.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html

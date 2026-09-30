@@ -21,6 +21,14 @@ export function *getModules() {
 
 export const getSettings = {
 	*fulfill( module ) {
+		const config = yield controls.resolveSelect( STORE_NAME, 'getModule', module );
+
+		/* A module that declares no settings has no settings route, and the endpoint answers 404 for it. */
+		if ( ! config?.settings ) {
+			yield receiveSettings( module, {} );
+			return;
+		}
+
 		const settings = yield apiFetch( {
 			path: `/ithemes-security/v1/settings/${ module }`,
 		} );

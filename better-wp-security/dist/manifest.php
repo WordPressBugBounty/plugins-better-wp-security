@@ -745,10 +745,10 @@
     array (
       0 => 'packages/data.js',
     ),
-    'hash' => '082887e3fb1ab167313346637ad25b9715e7ee1a',
+    'hash' => 'ddb3d30b8afcdeb888dc4d6cbb7898f8fe2bb907',
     'contentHash' => 
     array (
-      'javascript' => 'f16b75f0cb2c19005526',
+      'javascript' => '48a8499bf82b107a0e00',
     ),
     'vendors' => 
     array (

@@ -122,12 +122,18 @@ export function* activateModule( module ) {
 		const response = yield updateModule( module, 'active' );
 		yield receiveModule( response );
 
-		// Always fetch fresh settings after activation to ensure state matches the backend.
-		const settings = yield apiFetch( {
-			path: `/ithemes-security/v1/settings/${ module }`,
-		} );
+		/*
+		 * Fetch fresh settings so state matches the backend. Modules that declare none
+		 * have no settings route, and requesting it anyway throws on the 404, aborting
+		 * this action before the activation succeeds visibly to the user.
+		 */
+		if ( response.settings ) {
+			const settings = yield apiFetch( {
+				path: `/ithemes-security/v1/settings/${ module }`,
+			} );
 
-		yield receiveSettings( module, settings );
+			yield receiveSettings( module, settings );
+		}
 
 		yield { type: FINISH_SAVING_MODULES, modules: [ module ] };
 
