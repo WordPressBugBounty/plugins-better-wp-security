@@ -3,7 +3,7 @@ Contributors: ithemes, timothyblynjacobs, lisacee, solidwp
 Tags: security, malware, two factor authentication, brute force protection, password protection
 Requires at least: 6.5
 Tested up to: 7.1
-Stable tag: 10.0.5
+Stable tag: 10.0.6
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -184,6 +184,22 @@ Manage more than one WordPress site? Release lockouts and keep your themes, plug
 8. Automated vulnerability patching with Patchstack (Pro)
 
 == Changelog ==
+
+= 10.0.6 =
+* Bug Fix: Prevented wp-config.php and .htaccess from being left empty after a server crash or a failed file update.
+* Bug Fix: Resolved an error that broke the Firewall settings tab when IP Detection was set to "Unconfigured".
+* Bug Fix: Resolved an issue where modals and popovers in the admin UI rendered without their styles.
+
+= 10.0.5 =
+* Bug Fix: Resolved 404 errors when loading settings for features.
+
+= 10.0.4 =
+* Bug Fix: Settings and setup no longer fail with a "not a valid JSON response" error when a host firewall blocks the batch REST endpoint.
+* Bug Fix: Prevent fatal errors for banned IPs when Security is loaded early by the MU Plugin Loader.
+
+= 10.0.3 =
+* Tweak: Added Nexcess Licensing through Harbor library.
+* Bug Fix: Prevent local 2FA QR generator fatals on large payloads.
 
 = 10.0.2 =
 * Bug Fix: Handle WP_Error in login interstitial session creation to prevent fatal errors.

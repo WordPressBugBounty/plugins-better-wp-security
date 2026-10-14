@@ -1151,3 +1151,7 @@
     Bug Fix: Prevent fatal errors for banned IPs when Security is loaded early by the MU Plugin Loader.
 10.0.5 - 2026-09-30 - Nexcess
     Bug Fix: Resolved 404 errors when loading settings for features.
+10.0.6 - 2026-10-14 - Nexcess
+    Bug Fix: Prevented wp-config.php and .htaccess from being left empty after a server crash or a failed file update.
+    Bug Fix: Resolved an error that broke the Firewall settings tab when IP Detection was set to "Unconfigured".
+    Bug Fix: Resolved an issue where modals and popovers in the admin UI rendered without their styles.

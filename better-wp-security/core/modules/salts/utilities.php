@@ -62,12 +62,16 @@ final class ITSEC_WordPress_Salts_Utilities {
 			$salt = str_replace( '$', '\\$', $salt );
 			$regex = "/(define\s*\(\s*(['\"])$define\\2\s*,\s*)(['\"]).+?\\3(\s*\)\s*;)/";
 			$config = preg_replace( $regex, "\${1}'$salt'\${4}", $config );
+
+			if ( null === $config ) {
+				return new WP_Error( 'itsec-wordpress-salts-utilities-cannot-update-wp-config.php', __( 'Unable to update the salts in the <code>wp-config.php</code> file. You will need to manually update the file.', 'better-wp-security' ) );
+			}
 		}
 
 		$write_result = ITSEC_Lib_File::write( $config_file_path, $config );
 
 		if ( is_wp_error( $write_result ) ) {
-			return new WP_Error( 'itsec-wordpress-salts-utilities-cannot-save-wp-config.php', sprintf( __( 'Unable to update the <code>wp-config.php</code> file in order to update the salts. You will need to manually update the file. Error details as follows: %1$s (%2$s)', 'better-wp-security' ), $config->get_error_message(), $config->get_error_code() ) );
+			return new WP_Error( 'itsec-wordpress-salts-utilities-cannot-save-wp-config.php', sprintf( __( 'Unable to update the <code>wp-config.php</code> file in order to update the salts. You will need to manually update the file. Error details as follows: %1$s (%2$s)', 'better-wp-security' ), $write_result->get_error_message(), $write_result->get_error_code() ) );
 		}
 
 		return true;
