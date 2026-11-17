@@ -497,7 +497,7 @@ class ComposerStaticInit0a91749f1cc81fb2309046dd7d88144f
         'iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\Telemetry\\Telemetry_Subscriber' => __DIR__ . '/..' . '/stellarwp/telemetry/src/Telemetry/Telemetry/Telemetry_Subscriber.php',
         'iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\Uninstall' => __DIR__ . '/..' . '/stellarwp/telemetry/src/Telemetry/Uninstall.php',
         'iThemesSecurity\\Strauss\\Symfony\\Polyfill\\Mbstring\\Mbstring' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/Mbstring.php',
-        'iThemesSecurity\\Strauss\\Your\\Namespace\\Container' => __DIR__ . '/..' . '/stellarwp/container-contract/examples/di52/Container.php',
+        'iThemesSecurity\\Strauss\\Your\\Namespace\\Container' => __DIR__ . '/..' . '/stellarwp/container-contract/examples/php-di/Container.php',
         'iThemesSecurity\\Strauss\\ZxcvbnPhp\\Feedback' => __DIR__ . '/..' . '/bjeavons/zxcvbn-php/src/Feedback.php',
         'iThemesSecurity\\Strauss\\ZxcvbnPhp\\Matcher' => __DIR__ . '/..' . '/bjeavons/zxcvbn-php/src/Matcher.php',
         'iThemesSecurity\\Strauss\\ZxcvbnPhp\\Matchers\\BaseMatch' => __DIR__ . '/..' . '/bjeavons/zxcvbn-php/src/Matchers/BaseMatch.php',

@@ -1155,3 +1155,5 @@
     Bug Fix: Prevented wp-config.php and .htaccess from being left empty after a server crash or a failed file update.
     Bug Fix: Resolved an error that broke the Firewall settings tab when IP Detection was set to "Unconfigured".
     Bug Fix: Resolved an issue where modals and popovers in the admin UI rendered without their styles.
+10.0.6.1 - 2026-11-16 - Nexcess
+    Security: Improved login lockouts for visitors connecting over IPv6.

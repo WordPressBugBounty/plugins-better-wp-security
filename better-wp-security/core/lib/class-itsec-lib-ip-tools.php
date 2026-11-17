@@ -30,6 +30,54 @@ class ITSEC_Lib_IP_Tools {
 	);
 
 	/**
+	 * Gets the identifier used to track lockouts and failed attempts for a host.
+	 *
+	 * IPv4 addresses are returned unchanged. IPv6 addresses are reduced to their network prefix in
+	 * CIDR notation.
+	 *
+	 * @since 9.0.10.1
+	 *
+	 * @param string $ip The IP address.
+	 *
+	 * @return string
+	 */
+	public static function get_lockout_host( $ip ) {
+		if ( ! is_string( $ip ) || ! str_contains( $ip, ':' ) || ! filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 ) ) {
+			return $ip;
+		}
+
+		$packed = inet_pton( $ip );
+
+		if ( false === $packed ) {
+			return $ip;
+		}
+
+		// IPv4-mapped IPv6 addresses (::ffff:0:0/96) are really IPv4 clients.
+		if ( str_starts_with( $packed, str_repeat( "\0", 10 ) . "\xff\xff" ) ) {
+			return $ip;
+		}
+
+		/**
+		 * Filters the IPv6 prefix length that lockouts and failed attempts are aggregated by.
+		 *
+		 * @since 9.0.10.1
+		 *
+		 * @param int    $length The prefix length. Defaults to 64.
+		 * @param string $ip     The IP address.
+		 */
+		$length = (int) apply_filters( 'itsec_lockout_ipv6_prefix_length', 64, $ip );
+		$length = max( 32, min( 128, $length ) );
+
+		if ( 128 === $length ) {
+			return $ip;
+		}
+
+		$mask = inet_pton( self::get_mask( $length, 6 ) );
+
+		return inet_ntop( $packed & $mask ) . '/' . $length;
+	}
+
+	/**
 	 * Validates an IP or an IP Range using CIDR notation
 	 *
 	 * @since 2.2.0

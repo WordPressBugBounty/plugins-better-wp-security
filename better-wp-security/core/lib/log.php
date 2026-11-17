@@ -229,6 +229,59 @@ final class ITSEC_Log {
 		return ITSEC_Log_Util::get_entries( $filters, $limit, $page, $sort_by_column, $sort_direction, $columns );
 	}
 
+	/**
+	 * Gets log entries for a lockout host.
+	 *
+	 * IPv6 lockouts are tracked by network prefix, but each log entry stores the address it came from.
+	 * When the `remote_ip` filter is a CIDR range, entries are matched by whether their address falls
+	 * inside it. Any other value is filtered as usual.
+	 *
+	 * @since 9.0.10.1
+	 *
+	 * @param array        $filters        The log filters, as accepted by {@see ITSEC_Log::get_entries()}.
+	 * @param int          $limit          The number of entries to return.
+	 * @param int          $page           The page of entries to return.
+	 * @param string|array $sort_by_column The column to sort by.
+	 * @param string       $sort_direction The sort direction.
+	 * @param array|string $columns        The columns to return.
+	 *
+	 * @return array|false
+	 */
+	public static function get_entries_for_host( $filters = [], $limit = 100, $page = 1, $sort_by_column = 'timestamp', $sort_direction = 'DESC', $columns = false ) {
+		$host = isset( $filters['remote_ip'] ) ? $filters['remote_ip'] : '';
+
+		if ( ! is_string( $host ) || ! str_contains( $host, '/' ) ) {
+			return self::get_entries( $filters, $limit, $page, $sort_by_column, $sort_direction, $columns );
+		}
+
+		unset( $filters['remote_ip'] );
+
+		$limit   = $limit > 0 ? (int) $limit : 100;
+		$offset  = max( 0, ( (int) $page - 1 ) * $limit );
+		$matches = [];
+
+		// Scan at most 1,000 entries, which is enough to fill a page of history without loading the whole log.
+		for ( $scan_page = 1; $scan_page <= 10; $scan_page++ ) {
+			$entries = self::get_entries( $filters, 100, $scan_page, $sort_by_column, $sort_direction, $columns );
+
+			if ( ! is_array( $entries ) ) {
+				return $entries;
+			}
+
+			foreach ( $entries as $entry ) {
+				if ( isset( $entry['remote_ip'] ) && ITSEC_Lib_IP_Tools::in_range( $entry['remote_ip'], $host ) ) {
+					$matches[] = $entry;
+				}
+			}
+
+			if ( count( $entries ) < 100 || count( $matches ) >= $offset + $limit ) {
+				break;
+			}
+		}
+
+		return array_slice( $matches, $offset, $limit );
+	}
+
 	public static function get_entry( $id ) {
 		require_once( dirname( __FILE__ ) . '/log-util.php' );
 

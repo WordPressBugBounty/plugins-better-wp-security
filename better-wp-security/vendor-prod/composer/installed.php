@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'ithemes/ithemes-security-pro',
-        'pretty_version' => '10.0.6',
-        'version' => '10.0.6.0',
-        'reference' => '6bb9c57dc29ba31fed5fdb783c8517b2c0896736',
+        'pretty_version' => '10.0.6.1',
+        'version' => '10.0.6.1',
+        'reference' => '85c07c7569c8a0380ca3ea4d0b4d172dce965a1a',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -29,9 +29,9 @@
             'dev_requirement' => false,
         ),
         'ithemes/ithemes-security-pro' => array(
-            'pretty_version' => '10.0.6',
-            'version' => '10.0.6.0',
-            'reference' => '6bb9c57dc29ba31fed5fdb783c8517b2c0896736',
+            'pretty_version' => '10.0.6.1',
+            'version' => '10.0.6.1',
+            'reference' => '85c07c7569c8a0380ca3ea4d0b4d172dce965a1a',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -163,7 +163,7 @@ class Lockouts_Controller extends \WP_REST_Controller {
 
 			switch ( $data['type'] ) {
 				case 'recaptcha':
-					$logs = ITSEC_Log::get_entries( array(
+					$logs = ITSEC_Log::get_entries_for_host( array(
 						'module'          => 'recaptcha',
 						'code'            => 'failed-validation',
 						'remote_ip'       => $data['host'],
@@ -208,7 +208,7 @@ class Lockouts_Controller extends \WP_REST_Controller {
 						break;
 					}
 
-					$logs = ITSEC_Log::get_entries( $log_query, 100, 1, 'timestamp', 'DESC', 'all' );
+					$logs = ITSEC_Log::get_entries_for_host( $log_query, 100, 1, 'timestamp', 'DESC', 'all' );
 
 					if ( is_array( $logs ) ) {
 						foreach ( $logs as $log ) {

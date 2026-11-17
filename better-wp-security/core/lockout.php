@@ -213,6 +213,8 @@ final class ITSEC_Lockout {
 	/**
 	 * Find the lockout for a given type and identifier.
 	 *
+	 * @since 9.0.10.1 IPv6 hosts are looked up by their network prefix.
+	 *
 	 * @param string $type
 	 * @param string $identifier
 	 *
@@ -234,6 +236,10 @@ final class ITSEC_Lockout {
 				break;
 			default:
 				return null;
+		}
+
+		if ( 'host' === $type ) {
+			$identifier = ITSEC_Lib_IP_Tools::get_lockout_host( $identifier );
 		}
 
 		$data = $wpdb->get_row( $wpdb->prepare(
@@ -292,6 +298,8 @@ final class ITSEC_Lockout {
 	/**
 	 * Check if a given host is locked out.
 	 *
+	 * @since 9.0.10.1 IPv6 hosts are checked by their network prefix.
+	 *
 	 * @param string $host
 	 *
 	 * @return bool
@@ -300,6 +308,8 @@ final class ITSEC_Lockout {
 
 		/** @var wpdb $wpdb */
 		global $wpdb;
+
+		$host = ITSEC_Lib_IP_Tools::get_lockout_host( $host );
 
 		return (bool) $wpdb->get_var( $wpdb->prepare(
 			"SELECT `lockout_host` FROM `{$wpdb->base_prefix}itsec_lockouts` WHERE `lockout_active`=1 AND `lockout_expire_gmt` > %s AND `lockout_host` = %s;",
@@ -371,9 +381,21 @@ final class ITSEC_Lockout {
 		}
 	}
 
+	/**
+	 * Record a failed attempt for a host and check whether it has reached the lockout limit.
+	 *
+	 * @since 9.0.10.1 IPv6 hosts are tracked by their network prefix.
+	 *
+	 * @param string $host
+	 * @param array  $event_data
+	 * @param array  $options
+	 *
+	 * @return bool
+	 */
 	private function create_host_temp_event( $host, $event_data, $options ) {
 		global $wpdb;
 
+		$host                    = ITSEC_Lib_IP_Tools::get_lockout_host( $host );
 		$event_data['temp_host'] = $host;
 
 		$wpdb->insert( "{$wpdb->base_prefix}itsec_temp", $event_data );
@@ -487,6 +509,8 @@ final class ITSEC_Lockout {
 	/**
 	 * Create a lockout.
 	 *
+	 * @since 9.0.10.1 IPv6 hosts are locked out by their network prefix.
+	 *
 	 * @param Lockout\Context|array $args_or_context
 	 *
 	 * @return array
@@ -529,6 +553,10 @@ final class ITSEC_Lockout {
 
 		$whitelisted = ITSEC_Lib::is_ip_whitelisted( $host );
 		$blacklisted = false;
+
+		if ( false !== $host ) {
+			$host = ITSEC_Lib_IP_Tools::get_lockout_host( $host );
+		}
 
 		$log_data = array(
 			'module'         => $module,

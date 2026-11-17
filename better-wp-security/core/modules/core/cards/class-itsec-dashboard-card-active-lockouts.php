@@ -260,7 +260,7 @@ class ITSEC_Dashboard_Card_Active_Lockouts extends ITSEC_Dashboard_Card {
 
 			switch ( $data['type'] ) {
 				case 'four_oh_four':
-					$logs = ITSEC_Log::get_entries( array(
+					$logs = ITSEC_Log::get_entries_for_host( array(
 						'module'          => 'four_oh_four',
 						'code'            => 'found_404',
 						'remote_ip'       => $data['host'],
@@ -280,7 +280,7 @@ class ITSEC_Dashboard_Card_Active_Lockouts extends ITSEC_Dashboard_Card {
 					}
 					break;
 				case 'recaptcha':
-					$logs = ITSEC_Log::get_entries( array(
+					$logs = ITSEC_Log::get_entries_for_host( array(
 						'module'          => 'recaptcha',
 						'code'            => 'failed-validation',
 						'remote_ip'       => $data['host'],
@@ -325,7 +325,7 @@ class ITSEC_Dashboard_Card_Active_Lockouts extends ITSEC_Dashboard_Card {
 						break;
 					}
 
-					$logs = ITSEC_Log::get_entries( $log_query, 100, 1, 'timestamp', 'DESC', 'all' );
+					$logs = ITSEC_Log::get_entries_for_host( $log_query, 100, 1, 'timestamp', 'DESC', 'all' );
 
 					if ( is_array( $logs ) ) {
 						foreach ( $logs as $log ) {

@@ -433,7 +433,7 @@ return array(
     'iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\Telemetry\\Telemetry_Subscriber' => $vendorDir . '/stellarwp/telemetry/src/Telemetry/Telemetry/Telemetry_Subscriber.php',
     'iThemesSecurity\\Strauss\\StellarWP\\Telemetry\\Uninstall' => $vendorDir . '/stellarwp/telemetry/src/Telemetry/Uninstall.php',
     'iThemesSecurity\\Strauss\\Symfony\\Polyfill\\Mbstring\\Mbstring' => $vendorDir . '/symfony/polyfill-mbstring/Mbstring.php',
-    'iThemesSecurity\\Strauss\\Your\\Namespace\\Container' => $vendorDir . '/stellarwp/container-contract/examples/di52/Container.php',
+    'iThemesSecurity\\Strauss\\Your\\Namespace\\Container' => $vendorDir . '/stellarwp/container-contract/examples/php-di/Container.php',
     'iThemesSecurity\\Strauss\\ZxcvbnPhp\\Feedback' => $vendorDir . '/bjeavons/zxcvbn-php/src/Feedback.php',
     'iThemesSecurity\\Strauss\\ZxcvbnPhp\\Matcher' => $vendorDir . '/bjeavons/zxcvbn-php/src/Matcher.php',
     'iThemesSecurity\\Strauss\\ZxcvbnPhp\\Matchers\\BaseMatch' => $vendorDir . '/bjeavons/zxcvbn-php/src/Matchers/BaseMatch.php',
