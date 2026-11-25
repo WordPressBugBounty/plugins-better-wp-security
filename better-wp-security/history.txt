@@ -1157,3 +1157,5 @@
     Bug Fix: Resolved an issue where modals and popovers in the admin UI rendered without their styles.
 10.0.6.1 - 2026-11-16 - Nexcess
     Security: Improved login lockouts for visitors connecting over IPv6.
+10.0.7 - 2026-11-24 - Nexcess
+    Bug Fix: Updated the logo in Kadence Security email notifications.
